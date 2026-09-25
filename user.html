@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Online Examination System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Online Examination System</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="user.html">Dashboard</a>
+        <a href="login.html" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<div class="dashboard">
+
+    <div class="welcome-box">
+        <h2 id="welcomeMessage">Welcome, Student 👋</h2>
+        <p>Select an examination to start.</p>
+    </div>
+
+    <h2>Available Examinations</h2>
+
+    <div class="exam-cards">
+
+        <!-- JAVA EXAM -->
+
+        <div class="exam-card">
+            <h3>☕ Java Programming</h3>
+
+            <p><strong>Questions:</strong> 5</p>
+            <p><strong>Duration:</strong> 5 Minutes</p>
+            <p><strong>Type:</strong> Multiple Choice Questions</p>
+
+            <button type="button" onclick="startJavaExam()">
+                Start Java Exam
+            </button>
+        </div>
+
+        <!-- PYTHON EXAM -->
+
+        <div class="exam-card">
+            <h3>🐍 Python Programming</h3>
+
+            <p><strong>Questions:</strong> 5</p>
+            <p><strong>Duration:</strong> 5 Minutes</p>
+            <p><strong>Type:</strong> Multiple Choice Questions</p>
+
+            <button type="button" onclick="startPythonExam()">
+                Start Python Exam
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    // DISPLAY LOGGED-IN STUDENT NAME
+
+    const loggedInUser = JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+    if (!loggedInUser || loggedInUser.role !== "user") {
+        window.location.replace("login.html");
+    } else {
+        document.getElementById("welcomeMessage").textContent =
+            "Welcome, " + loggedInUser.name + " 👋";
+    }
+
+
+    // START JAVA EXAM
+
+    function startJavaExam() {
+        window.location.href = "./exam.html";
+    }
+
+
+    // START PYTHON EXAM
+
+    function startPythonExam() {
+        window.location.href = "./python-exam.html";
+    }
+
+
+    // LOGOUT
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+    }
+
+</script>
+
+</body>
+</html>

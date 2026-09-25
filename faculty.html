@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - Online Examination System</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .faculty-container {
+            max-width: 1150px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .faculty-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .faculty-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .faculty-card,
+        .faculty-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .faculty-card {
+            text-align: center;
+        }
+
+        .faculty-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .faculty-card p {
+            margin-bottom: 18px;
+        }
+
+        .faculty-card button,
+        .faculty-panel button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .faculty-panel {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .faculty-panel h2 {
+            margin-bottom: 20px;
+        }
+
+        .faculty-panel input,
+        .faculty-panel select,
+        .faculty-panel textarea {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .faculty-panel textarea {
+            min-height: 80px;
+        }
+
+        .faculty-panel table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .faculty-panel th,
+        .faculty-panel td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .faculty-panel th {
+            background: #eff6ff;
+        }
+
+        .faculty-item {
+            background: #f4f7fb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .faculty-item p {
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .faculty-container {
+                margin: 15px auto;
+            }
+
+            .faculty-panel {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Online Examination System</h1>
+
+    <nav>
+        <a href="faculty.html">Faculty Dashboard</a>
+        <a href="login.html" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<main class="faculty-container">
+
+    <h2 class="faculty-title" id="welcome">
+        Welcome, Faculty
+    </h2>
+
+    <div class="faculty-cards">
+
+        <div class="faculty-card">
+            <h3>📚 Manage Exams</h3>
+            <p>View available examinations.</p>
+            <button onclick="showPanel('examsPanel')">
+                View Exams
+            </button>
+        </div>
+
+        <div class="faculty-card">
+            <h3>📝 Add Questions</h3>
+            <p>Create Java and Python MCQs.</p>
+            <button onclick="showPanel('questionsPanel')">
+                Add Questions
+            </button>
+        </div>
+
+        <div class="faculty-card">
+            <h3>📊 Student Results</h3>
+            <p>View submitted exam results.</p>
+            <button onclick="showPanel('resultsPanel')">
+                View Results
+            </button>
+        </div>
+
+        <div class="faculty-card">
+            <h3>👩‍🎓 View Students</h3>
+            <p>View registered students.</p>
+            <button onclick="showPanel('studentsPanel')">
+                View Students
+            </button>
+        </div>
+
+    </div>
+
+    <!-- MANAGE EXAMS -->
+
+    <section class="faculty-panel" id="examsPanel">
+        <h2>Available Examinations</h2>
+
+        <div class="faculty-item">
+            <h3>☕ Java Programming</h3>
+            <p>5 Questions | 5 Minutes | MCQ</p>
+        </div>
+
+        <div class="faculty-item">
+            <h3>🐍 Python Programming</h3>
+            <p>5 Questions | 5 Minutes | MCQ</p>
+        </div>
+    </section>
+
+    <!-- ADD QUESTIONS -->
+
+    <section class="faculty-panel" id="questionsPanel">
+        <h2>Add New Question</h2>
+
+        <form id="questionForm">
+
+            <select id="subject" required>
+                <option value="">Select Subject</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+            </select>
+
+            <textarea id="questionText"
+                placeholder="Enter your question"
+                required></textarea>
+
+            <input id="optionA" placeholder="Option A" required>
+            <input id="optionB" placeholder="Option B" required>
+            <input id="optionC" placeholder="Option C" required>
+            <input id="optionD" placeholder="Option D" required>
+
+            <select id="correctAnswer" required>
+                <option value="">Select Correct Answer</option>
+                <option value="A">Option A</option>
+                <option value="B">Option B</option>
+                <option value="C">Option C</option>
+                <option value="D">Option D</option>
+            </select>
+
+            <textarea id="explanation"
+                placeholder="Explanation for correct answer"
+                required></textarea>
+
+            <button type="submit">Save Question</button>
+
+        </form>
+
+        <p id="questionMessage"></p>
+
+        <h2 style="margin-top: 30px;">Saved Faculty Questions</h2>
+
+        <div id="savedQuestions"></div>
+    </section>
+
+    <!-- RESULTS -->
+
+    <section class="faculty-panel" id="resultsPanel">
+        <h2>Student Results</h2>
+        <div id="resultsList"></div>
+    </section>
+
+    <!-- STUDENTS -->
+
+    <section class="faculty-panel" id="studentsPanel">
+        <h2>Registered Students</h2>
+        <div id="studentsList"></div>
+    </section>
+
+</main>
+
+<script>
+    // FACULTY LOGIN PROTECTION
+
+    const faculty = JSON.parse(
+        localStorage.getItem("loggedInUser") || "null"
+    );
+
+    if (!faculty || faculty.role !== "faculty") {
+        window.location.replace("login.html");
+    } else {
+        document.getElementById("welcome").textContent =
+            "Welcome, " + faculty.name + " 👋";
+    }
+
+
+    // DASHBOARD NAVIGATION
+
+    function showPanel(panelId) {
+        document.querySelectorAll(".faculty-panel")
+            .forEach(function(panel) {
+                panel.style.display = "none";
+            });
+
+        document.getElementById(panelId).style.display = "block";
+
+        if (panelId === "questionsPanel") {
+            displayQuestions();
+        }
+
+        if (panelId === "resultsPanel") {
+            displayResults();
+        }
+
+        if (panelId === "studentsPanel") {
+            displayStudents();
+        }
+    }
+
+
+    // ADD QUESTIONS
+
+    document.getElementById("questionForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const question = {
+                subject: document.getElementById("subject").value,
+                question: document.getElementById("questionText").value,
+                options: [
+                    document.getElementById("optionA").value,
+                    document.getElementById("optionB").value,
+                    document.getElementById("optionC").value,
+                    document.getElementById("optionD").value
+                ],
+                correct: document.getElementById("correctAnswer").value,
+                explanation: document.getElementById("explanation").value
+            };
+
+            const questions = JSON.parse(
+                localStorage.getItem("facultyQuestions") || "[]"
+            );
+
+            questions.push(question);
+
+            localStorage.setItem(
+                "facultyQuestions",
+                JSON.stringify(questions)
+            );
+
+            document.getElementById("questionMessage").textContent =
+                "Question saved successfully!";
+
+            document.getElementById("questionForm").reset();
+
+            displayQuestions();
+        });
+
+
+    // DISPLAY SAVED QUESTIONS
+
+    function displayQuestions() {
+        const questions = JSON.parse(
+            localStorage.getItem("facultyQuestions") || "[]"
+        );
+
+        const container = document.getElementById("savedQuestions");
+        container.innerHTML = "";
+
+        if (questions.length === 0) {
+            container.textContent = "No faculty questions added yet.";
+            return;
+        }
+
+        questions.forEach(function(item, index) {
+            const card = document.createElement("div");
+            card.className = "faculty-item";
+
+            const heading = document.createElement("h3");
+            heading.textContent =
+                (index + 1) + ". [" + item.subject + "] " +
+                item.question;
+
+            const answer = document.createElement("p");
+            answer.textContent =
+                "Correct Answer: Option " + item.correct;
+
+            const explanation = document.createElement("p");
+            explanation.textContent =
+                "Explanation: " + item.explanation;
+
+            card.appendChild(heading);
+            card.appendChild(answer);
+            card.appendChild(explanation);
+            container.appendChild(card);
+        });
+    }
+
+
+    // VIEW RESULTS
+
+    function displayResults() {
+        const container = document.getElementById("resultsList");
+        container.innerHTML = "";
+
+        const javaScore = localStorage.getItem("examScore");
+        const pythonScore = localStorage.getItem("pythonScore");
+
+        if (javaScore === null && pythonScore === null) {
+            container.textContent =
+                "No examination results available yet.";
+            return;
+        }
+
+        const table = document.createElement("table");
+
+        const heading = document.createElement("tr");
+        ["Exam", "Score", "Percentage"].forEach(function(label) {
+            const th = document.createElement("th");
+            th.textContent = label;
+            heading.appendChild(th);
+        });
+        table.appendChild(heading);
+
+        [
+            ["Java Programming", javaScore],
+            ["Python Programming", pythonScore]
+        ].forEach(function(item) {
+            if (item[1] === null) return;
+
+            const row = document.createElement("tr");
+
+            [
+                item[0],
+                item[1] + " / 5",
+                (Number(item[1]) / 5 * 100) + "%"
+            ].forEach(function(value) {
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+            });
+
+            table.appendChild(row);
+        });
+
+        container.appendChild(table);
+    }
+
+
+    // VIEW STUDENTS
+
+    function displayStudents() {
+        const container = document.getElementById("studentsList");
+        container.innerHTML = "";
+
+        const students = JSON.parse(
+            localStorage.getItem("registeredUsers") || "[]"
+        );
+
+        if (students.length === 0) {
+            container.textContent =
+                "No registered students found.";
+            return;
+        }
+
+        students.forEach(function(student) {
+            const card = document.createElement("div");
+            card.className = "faculty-item";
+
+            const name = document.createElement("h3");
+            name.textContent = student.name;
+
+            const email = document.createElement("p");
+            email.textContent = student.email;
+
+            card.appendChild(name);
+            card.appendChild(email);
+            container.appendChild(card);
+        });
+    }
+
+
+    // LOGOUT
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+    }
+</script>
+
+</body>
+</html>

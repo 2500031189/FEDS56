@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Exam Result & Review</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .review-container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .review-card.correct {
+            border-left: 6px solid #16a34a;
+        }
+
+        .review-card.wrong {
+            border-left: 6px solid #dc2626;
+        }
+
+        .review-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .review-card p {
+            margin: 10px 0;
+        }
+
+        .green {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .red {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .explanation {
+            background: #eff6ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .review-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #reviewSection {
+            display: none;
+        }
+
+        .review-heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Online Examination System</h1>
+    <nav>
+        <a href="user.html">Dashboard</a>
+        <a href="login.html" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<div class="result-container">
+
+    <h2>🐍 Python Programming Result</h2>
+
+    <h3>Your Score</h3>
+
+    <p id="scoreText">Loading...</p>
+
+    <p id="percentage"></p>
+
+    <p id="performance"></p>
+
+    <p id="message"></p>
+
+    <button class="review-btn" onclick="showReview()">
+        Review Answers
+    </button>
+
+    <button onclick="window.location.href='user.html'">
+        Back to Dashboard
+    </button>
+
+</div>
+
+<div class="review-container" id="reviewSection">
+
+    <h2 class="review-heading">📝 Answer Review</h2>
+
+    <div id="reviewList"></div>
+
+</div>
+
+<script>
+    const scoreValue = localStorage.getItem("pythonScore");
+    const reviewData = JSON.parse(
+        localStorage.getItem("pythonReview") || "[]"
+    );
+
+    if (scoreValue !== null && reviewData.length === 5) {
+        const score = Number(scoreValue);
+        const percentage = (score / 5) * 100;
+
+        document.getElementById("scoreText").textContent =
+            score + " / 5";
+
+        document.getElementById("percentage").textContent =
+            "Percentage: " + percentage + "%";
+
+        document.getElementById("performance").textContent =
+            "Correct: " + score + " | Wrong/Unanswered: " + (5 - score);
+
+        document.getElementById("message").textContent =
+            score >= 3
+                ? "🎉 Congratulations! You passed."
+                : "Keep practicing and try again.";
+    } else {
+        document.getElementById("scoreText").textContent =
+            "No completed Python exam found.";
+        document.getElementById("message").textContent =
+            "Please complete the Python examination first.";
+    }
+
+    function showReview() {
+        if (reviewData.length !== 5) {
+            alert("Complete the Python exam to view your answers.");
+            return;
+        }
+
+        const section = document.getElementById("reviewSection");
+        const list = document.getElementById("reviewList");
+
+        list.innerHTML = "";
+
+        reviewData.forEach(function (item, index) {
+            const card = document.createElement("div");
+
+            card.className =
+                "review-card " + (item.isCorrect ? "correct" : "wrong");
+
+            const title = document.createElement("h3");
+            title.textContent = "Q" + (index + 1) + ". " + item.question;
+
+            const yourAnswer = document.createElement("p");
+            yourAnswer.textContent = "Your Answer: " + item.yourAnswer;
+            yourAnswer.className = item.isCorrect ? "green" : "red";
+
+            const correctAnswer = document.createElement("p");
+            correctAnswer.textContent =
+                "Correct Answer: " + item.correctAnswer;
+            correctAnswer.className = "green";
+
+            const marks = document.createElement("p");
+            marks.textContent =
+                "Marks: " + (item.isCorrect ? "1 / 1" : "0 / 1");
+            marks.className = item.isCorrect ? "green" : "red";
+
+            const explanation = document.createElement("p");
+            explanation.textContent =
+                "Explanation: " + item.explanation;
+            explanation.className = "explanation";
+
+            card.appendChild(title);
+            card.appendChild(yourAnswer);
+            card.appendChild(correctAnswer);
+            card.appendChild(marks);
+            card.appendChild(explanation);
+
+            list.appendChild(card);
+        });
+
+        section.style.display = "block";
+        section.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+    }
+</script>
+
+</body>
+</html>

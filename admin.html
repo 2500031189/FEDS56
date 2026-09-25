@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Online Examination System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+    <h1>Online Examination System</h1>
+
+    <nav>
+        <a href="admin.html">Dashboard</a>
+        <a href="login.html">Logout</a>
+    </nav>
+
+</header>
+
+
+<div class="dashboard">
+
+    <!-- WELCOME -->
+
+    <div class="welcome-box">
+
+        <h2>Welcome, Admin</h2>
+
+        <p>
+            Manage examinations, questions and student results.
+        </p>
+
+    </div>
+
+
+    <h2>Admin Modules</h2>
+
+
+    <div class="exam-cards">
+
+
+        <!-- MANAGE EXAMS -->
+
+        <div class="exam-card">
+
+            <h3>📝 Manage Exams</h3>
+
+            <p>
+                View available examinations and exam details.
+            </p>
+
+            <button onclick="manageExams()">
+                Manage Exams
+            </button>
+
+        </div>
+
+
+        <!-- ADD QUESTIONS -->
+
+        <div class="exam-card">
+
+            <h3>➕ Add Questions</h3>
+
+            <p>
+                Add questions to the examination.
+            </p>
+
+            <button onclick="addQuestion()">
+                Add Questions
+            </button>
+
+        </div>
+
+
+        <!-- VIEW RESULTS -->
+
+        <div class="exam-card">
+
+            <h3>📊 View Results</h3>
+
+            <p>
+                View student examination results.
+            </p>
+
+            <button onclick="viewResults()">
+                View Results
+            </button>
+
+        </div>
+
+
+        <!-- STUDENTS -->
+
+        <div class="exam-card">
+
+            <h3>👨‍🎓 Students</h3>
+
+            <p>
+                View registered student information.
+            </p>
+
+            <button onclick="viewStudents()">
+                View Students
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MANAGE EXAMS SECTION -->
+
+    <div
+        id="examSection"
+        class="welcome-box"
+        style="display:none;"
+    >
+
+        <h2>Available Examinations</h2>
+
+
+        <div class="exam-card">
+
+            <h3>Java Programming</h3>
+
+            <p>
+                <strong>Subject:</strong> Java
+            </p>
+
+            <p>
+                <strong>Number of Questions:</strong> 5
+            </p>
+
+            <p>
+                <strong>Duration:</strong> 5 Minutes
+            </p>
+
+            <p>
+                <strong>Exam Type:</strong> Multiple Choice Questions
+            </p>
+
+            <p>
+                <strong>Status:</strong> Active
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ADD QUESTIONS SECTION -->
+
+    <div
+        id="questionSection"
+        class="welcome-box"
+        style="display:none;"
+    >
+
+        <h2>Add Examination Question</h2>
+
+
+        <form id="questionForm">
+
+            <input
+                type="text"
+                id="question"
+                placeholder="Enter Question"
+                required
+            >
+
+
+            <input
+                type="text"
+                id="optionA"
+                placeholder="Option A"
+                required
+            >
+
+
+            <input
+                type="text"
+                id="optionB"
+                placeholder="Option B"
+                required
+            >
+
+
+            <input
+                type="text"
+                id="optionC"
+                placeholder="Option C"
+                required
+            >
+
+
+            <input
+                type="text"
+                id="optionD"
+                placeholder="Option D"
+                required
+            >
+
+
+            <select id="correctAnswer" required>
+
+                <option value="">
+                    Select Correct Answer
+                </option>
+
+                <option value="A">
+                    Option A
+                </option>
+
+                <option value="B">
+                    Option B
+                </option>
+
+                <option value="C">
+                    Option C
+                </option>
+
+                <option value="D">
+                    Option D
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Save Question
+            </button>
+
+        </form>
+
+
+        <h3>Added Questions</h3>
+
+
+        <div id="questionList"></div>
+
+    </div>
+
+
+
+    <!-- RESULTS SECTION -->
+
+    <div
+        id="resultsSection"
+        class="welcome-box"
+        style="display:none;"
+    >
+
+        <h2>Student Examination Results</h2>
+
+
+        <p>
+
+            <strong>Student Name:</strong>
+            Ch.Devaharsha
+
+        </p>
+
+
+        <p>
+
+            <strong>Email:</strong>
+            devaharsha@gmail.com
+
+        </p>
+
+
+        <p>
+
+            <strong>Java Programming Score:</strong>
+
+            <span id="adminScore">
+                0 / 5
+            </span>
+
+        </p>
+
+    </div>
+
+
+
+    <!-- STUDENTS SECTION -->
+
+    <div
+        id="studentsSection"
+        class="welcome-box"
+        style="display:none;"
+    >
+
+        <h2>Registered Students</h2>
+
+
+        <!-- STUDENT 1 -->
+
+        <div class="exam-card">
+
+            <h3>Student 1</h3>
+
+            <p>
+                <strong>Name:</strong>
+                Ch.Devaharsha
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                devaharsha@gmail.com
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                Student
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                Active
+            </p>
+
+        </div>
+
+
+        <!-- STUDENT 2 -->
+
+        <div class="exam-card">
+
+            <h3>Student 2</h3>
+
+            <p>
+                <strong>Name:</strong>
+                G.Charani
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                charani@gmail.com
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                Student
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                Active
+            </p>
+
+        </div>
+
+
+        <!-- STUDENT 3 -->
+
+        <div class="exam-card">
+
+            <h3>Student 3</h3>
+
+            <p>
+                <strong>Name:</strong>
+                T.Ramya
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                ramya@gmail.com
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                Student
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                Active
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+// ==============================
+// MANAGE EXAMS
+// ==============================
+
+function manageExams() {
+
+    document.getElementById("examSection").style.display = "block";
+
+    document.getElementById("questionSection").style.display = "none";
+
+    document.getElementById("resultsSection").style.display = "none";
+
+    document.getElementById("studentsSection").style.display = "none";
+
+}
+
+
+
+// ==============================
+// ADD QUESTION
+// ==============================
+
+function addQuestion() {
+
+    document.getElementById("questionSection").style.display = "block";
+
+    document.getElementById("examSection").style.display = "none";
+
+    document.getElementById("resultsSection").style.display = "none";
+
+    document.getElementById("studentsSection").style.display = "none";
+
+    displayQuestions();
+
+}
+
+
+
+// ==============================
+// SAVE QUESTION
+// ==============================
+
+document
+.getElementById("questionForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    const questionData = {
+
+        question:
+            document.getElementById("question").value,
+
+        optionA:
+            document.getElementById("optionA").value,
+
+        optionB:
+            document.getElementById("optionB").value,
+
+        optionC:
+            document.getElementById("optionC").value,
+
+        optionD:
+            document.getElementById("optionD").value,
+
+        correctAnswer:
+            document.getElementById("correctAnswer").value
+
+    };
+
+
+    let questions =
+        JSON.parse(
+            localStorage.getItem("adminQuestions")
+        ) || [];
+
+
+    questions.push(questionData);
+
+
+    localStorage.setItem(
+        "adminQuestions",
+        JSON.stringify(questions)
+    );
+
+
+    alert("Question added successfully!");
+
+
+    document
+        .getElementById("questionForm")
+        .reset();
+
+
+    displayQuestions();
+
+});
+
+
+
+// ==============================
+// DISPLAY QUESTIONS
+// ==============================
+
+function displayQuestions() {
+
+    const questionList =
+        document.getElementById("questionList");
+
+
+    const questions =
+        JSON.parse(
+            localStorage.getItem("adminQuestions")
+        ) || [];
+
+
+    questionList.innerHTML = "";
+
+
+    if (questions.length === 0) {
+
+        questionList.innerHTML =
+            "<p>No questions added yet.</p>";
+
+        return;
+
+    }
+
+
+    questions.forEach(function(item, index) {
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "exam-card";
+
+
+        div.innerHTML =
+
+            "<h4>Question " +
+            (index + 1) +
+            "</h4>" +
+
+            "<p><strong>" +
+            item.question +
+            "</strong></p>" +
+
+            "<p>A. " +
+            item.optionA +
+            "</p>" +
+
+            "<p>B. " +
+            item.optionB +
+            "</p>" +
+
+            "<p>C. " +
+            item.optionC +
+            "</p>" +
+
+            "<p>D. " +
+            item.optionD +
+            "</p>" +
+
+            "<p><strong>Correct Answer:</strong> " +
+            item.correctAnswer +
+            "</p>";
+
+
+        questionList.appendChild(div);
+
+    });
+
+}
+
+
+
+// ==============================
+// VIEW RESULTS
+// ==============================
+
+function viewResults() {
+
+    const score =
+        localStorage.getItem("examScore");
+
+
+    document.getElementById("resultsSection").style.display = "block";
+
+    document.getElementById("examSection").style.display = "none";
+
+    document.getElementById("questionSection").style.display = "none";
+
+    document.getElementById("studentsSection").style.display = "none";
+
+
+    if (score !== null) {
+
+        document.getElementById("adminScore").textContent =
+            score + " / 5";
+
+    }
+
+    else {
+
+        document.getElementById("adminScore").textContent =
+            "No result available";
+
+    }
+
+}
+
+
+
+// ==============================
+// VIEW STUDENTS
+// ==============================
+
+function viewStudents() {
+
+    document.getElementById("studentsSection").style.display = "block";
+
+    document.getElementById("examSection").style.display = "none";
+
+    document.getElementById("questionSection").style.display = "none";
+
+    document.getElementById("resultsSection").style.display = "none";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

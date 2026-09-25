@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Online Examination System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Online Examination System</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Register</a>
+    </nav>
+</header>
+
+<div class="form-container">
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Enter Email"
+            required
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Enter Password"
+            required
+        >
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p id="loginMessage"></p>
+
+</div>
+
+<script>
+    document.getElementById("loginForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const email = document.getElementById("loginEmail")
+                .value.trim().toLowerCase();
+
+            const password = document.getElementById("loginPassword")
+                .value;
+
+            let user = null;
+            let destination = "";
+
+
+            // ADMIN LOGIN
+
+            if (email === "admin@oes.com" &&
+                password === "admin123") {
+
+                user = {
+                    name: "Admin",
+                    email: email,
+                    role: "admin"
+                };
+
+                destination = "admin.html";
+            }
+
+
+            // FACULTY LOGIN
+
+            else if (email === "faculty@oes.com" &&
+                     password === "faculty123") {
+
+                user = {
+                    name: "G.Charani",
+                    email: email,
+                    role: "faculty"
+                };
+
+                destination = "faculty.html";
+            }
+
+
+            // DEMO STUDENT LOGIN
+
+            else if (email === "devaharsha@gmail.com" &&
+                     password === "123456") {
+
+                user = {
+                    name: "Ch.Devaharsha",
+                    email: email,
+                    role: "user"
+                };
+
+                destination = "user.html";
+            }
+
+
+            // REGISTERED STUDENT LOGIN
+
+            else {
+                const users = JSON.parse(
+                    localStorage.getItem("registeredUsers") || "[]"
+                );
+
+                const registeredUser = users.find(function(item) {
+                    return (
+                        item.email.toLowerCase() === email &&
+                        item.password === password
+                    );
+                });
+
+                if (registeredUser) {
+                    user = {
+                        name: registeredUser.name,
+                        email: registeredUser.email,
+                        role: "user"
+                    };
+
+                    destination = "user.html";
+                }
+            }
+
+
+            if (user) {
+                localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(user)
+                );
+
+                window.location.href = destination;
+            } else {
+                document.getElementById("loginMessage").textContent =
+                    "Invalid email or password.";
+            }
+
+        });
+</script>
+
+</body>
+</html>

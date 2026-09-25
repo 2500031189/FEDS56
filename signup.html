@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Online Examination System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+<header>
+
+    <h1>Online Examination System</h1>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="login.html">Login</a>
+
+        <a href="signup.html">Register</a>
+
+    </nav>
+
+</header>
+
+
+
+<div class="form-container">
+
+    <h2>Student Registration</h2>
+
+
+    <form id="signupForm">
+
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter Full Name"
+            required
+        >
+
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter Email"
+            required
+        >
+
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Create Password"
+            required
+        >
+
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            required
+        >
+
+
+        <button type="submit">
+            Register
+        </button>
+
+
+    </form>
+
+
+    <p id="signupMessage"></p>
+
+
+</div>
+
+
+
+<script>
+
+
+document
+.getElementById("signupForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById("name").value;
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+
+    // CHECK PASSWORD
+
+    if (password !== confirmPassword) {
+
+        document.getElementById("signupMessage").textContent =
+            "Passwords do not match.";
+
+        return;
+
+    }
+
+
+
+    // GET EXISTING USERS
+
+    let users =
+        JSON.parse(
+            localStorage.getItem("registeredUsers")
+        ) || [];
+
+
+
+    // CHECK EXISTING EMAIL
+
+    const existingUser =
+        users.find(function(user) {
+
+            return user.email === email;
+
+        });
+
+
+
+    if (existingUser) {
+
+        document.getElementById("signupMessage").textContent =
+            "Email already registered.";
+
+        return;
+
+    }
+
+
+
+    // CREATE NEW USER
+
+    const newUser = {
+
+        name: name,
+
+        email: email,
+
+        password: password,
+
+        role: "user"
+
+    };
+
+
+
+    // ADD USER
+
+    users.push(newUser);
+
+
+
+    // SAVE TO LOCAL STORAGE
+
+    localStorage.setItem(
+        "registeredUsers",
+        JSON.stringify(users)
+    );
+
+
+
+    document.getElementById("signupMessage").textContent =
+        "Registration successful! Redirecting to login...";
+
+
+
+    // GO TO LOGIN
+
+    setTimeout(function() {
+
+        window.location.href = "login.html";
+
+    }, 1500);
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
